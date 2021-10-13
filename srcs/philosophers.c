@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/12 17:03:01 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/13 17:09:44 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ int	main(int ac, char **av)
 		usleep(1000);
 		printf("Heure : %lld\n", get_time_miliseconds() - timestamp);
 	}*/
-	print_struct_info(&philo_info);
+	//print_struct_info(&philo_info);
+	int i = -1;
+	int ret;
+	while (++i < philo_info.nb_philo)
+	{
+		ret = pthread_create(philo_info.philo[i], NULL, routine)
+	}
 	return (0);
 }

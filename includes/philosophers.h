@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:48:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/12 17:02:51 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/13 16:33:13 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_info
 	int			time_to_sleep;
 	int			number_of_eat;
 	int			b_number_of_eat;
+	t_philo		philo[200]; // 200 est le nombre de philos max possible a gerer
 	int			timestamp; // Permet de faire une soustraction pour afficher le temps ecouler en miliseconds
 }				t_info;
 
