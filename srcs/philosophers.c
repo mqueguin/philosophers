@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/13 17:09:44 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/13 20:54:52 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ static void	recover_philo_info(char **av, t_info *philo_info)
 		philo_info->number_of_eat = ft_atoi(av[5]);
 	}
 	else
+	{
 		philo_info->b_number_of_eat = 0;
+		philo_info->number_of_eat = 0;
+	}
 }
 
 static int	parse_arg(char **av, t_info *philo_info)
@@ -81,11 +84,13 @@ int	main(int ac, char **av)
 		printf("Heure : %lld\n", get_time_miliseconds() - timestamp);
 	}*/
 	//print_struct_info(&philo_info);
-	int i = -1;
-	int ret;
-	while (++i < philo_info.nb_philo)
+	/* int i = -1;
+	int ret; */
+	/* while (++i < philo_info.nb_philo)
 	{
 		ret = pthread_create(philo_info.philo[i], NULL, routine)
-	}
+	} */
+	if (!start_philo(&philo_info))
+		return (-1);
 	return (0);
 }

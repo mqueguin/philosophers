@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:48:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/13 16:33:13 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/13 20:44:40 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+typedef struct	s_philo
+{
+	int			forks[2]; // forks[0] : fourchette gauche; forks[1] : fourchette droite
+	//Mettre le thread ici
+	pthread_t	thread_philo;
+}				t_philo;
+
 typedef struct	s_info
 {
 	int			nb_philo;
@@ -32,16 +39,10 @@ typedef struct	s_info
 	int			timestamp; // Permet de faire une soustraction pour afficher le temps ecouler en miliseconds
 }				t_info;
 
-typedef struct	s_philo
-{
-	int			forks[2]; // forks[0] : fourchette gauche; forks[1] : fourchette droite
-	//Mettre le thread ici
-	pthread_t	thread_philo;
-}				t_philo;
-
 int		ft_isdigit_str(char *str);
 
 
+int		start_philo(t_info *philo_info);
 
 /**
  * Fonction de debug
