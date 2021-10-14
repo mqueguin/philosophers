@@ -6,20 +6,20 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/13 20:54:52 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/14 18:38:38 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	print_struct_info(t_info *philo_info)
+void	print_struct_info(t_info *info)
 {
-	printf("Valeur de nb_philo : %d\n", philo_info->nb_philo);
-	printf("Valeur de time_to_die : %d\n", philo_info->time_to_die);
-	printf("Valeur de time_to_eat : %d\n", philo_info->time_to_eat);
-	printf("Valeur de time_to_sleep : %d\n", philo_info->time_to_sleep);
-	printf("Valeur de b_number_of_eat : %d\n", philo_info->b_number_of_eat);
-	printf("Valeur de number_of_eat : %d\n", philo_info->number_of_eat);
+	printf("Valeur de nb_philo : %d\n", info->nb_philo);
+	printf("Valeur de time_to_die : %d\n", info->time_to_die);
+	printf("Valeur de time_to_eat : %d\n", info->time_to_eat);
+	printf("Valeur de time_to_sleep : %d\n", info->time_to_sleep);
+	printf("Valeur de b_number_of_eat : %d\n", info->b_number_of_eat);
+	printf("Valeur de number_of_eat : %d\n", info->number_of_eat);
 }
 
 double	get_time_miliseconds(void)

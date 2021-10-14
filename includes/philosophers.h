@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:48:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/14 12:24:01 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/14 18:38:54 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 
 typedef struct	s_philo
 {
-	int			forks[2]; // forks[0] : fourchette gauche; forks[1] : fourchette droite
-	//Mettre le thread ici
+	int			id;
+	int			fork_r;
+	int			fork_l;
 	pthread_t	thread_philo;
 	struct s_info		*info;
 }				t_philo;
