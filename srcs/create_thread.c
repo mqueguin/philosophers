@@ -6,18 +6,20 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 20:35:31 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/13 21:00:42 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/14 12:22:50 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	*routine(void *philo)
+void	*routine(void *philo_s)
 {
-	(void)philo;
+	t_philo		*philo;
+	//t_info		*info;
+
+	philo = (t_philo *)philo_s;
 	ft_putstr_fd("Je suis un philosophe\n", 1);
-	while (1)
-		;
+	printf("Valeur de nb_philo : %d\n", philo->info->nb_philo);
 	return (philo);
 }
 
@@ -37,6 +39,7 @@ int	start_philo(t_info *philo_info)
 			return (0);
 		}
 	}
-	usleep(500000);
+	while (1)
+		;
 	return (1);
 }
