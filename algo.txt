@@ -1,0 +1,12 @@
+PHILOSOPHERS:
+
+Creations des threads
+DEBUT DE LA ROUTINE
+checker si un philo est mort
+
+DECIDER QUI PEUT MANGER:
+-gerer les forks avec des mutex
+-gerer le temps
+-une fois que les philo choisi ont les forks ont lock les autres
+-Determiner ce que doivent faire les autres
+-Les autres doivent attendre de pouvoir prendre 2 forks pour commencer a faire quelque chose

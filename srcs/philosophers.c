@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/15 14:15:55 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/15 18:22:16 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,43 @@ void	print_struct_info(t_info *info)
 	printf("Valeur de number_of_eat : %d\n", info->number_of_eat);
 }
 
-double	get_time_miliseconds(void)
+long long	get_time_miliseconds(void)
 {
 	struct		timeval	tv;
-	long long	ret;
 
 	gettimeofday(&tv, NULL);
-	ret = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-	return (ret);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-static	void	ft_init_philo(t_info *philo_info)
+static	int	ft_init_philo(t_info *philo_info)
 {
 	int	i;
 
 	i = philo_info->nb_philo - 1;
 	while (i >= 0)
 	{
+		if (pthread_mutex_init(&philo_info->forks[i], NULL) != 0)
+		{
+			ft_putstr_fd("Error\nInitialisation des mutex\n", 2);
+			return (0);
+		}
 		philo_info->philo[i].id = i;
-		philo_info->philo[i].fork_r = 0;
-		philo_info->philo[i].fork_l = 0;
-		philo_info->philo[i--].info = philo_info;
+		philo_info->philo[i].fork_l = i;
+		philo_info->philo[i].fork_r = ((philo_info->philo[i].id + 1) % philo_info->nb_philo);
+		philo_info->philo[i].info = philo_info;
+		philo_info->philo[i].last_meal = 0;
+		philo_info->philo[i].meal = 0;
+		i--;
 	}
+	if (pthread_mutex_init(&philo_info->display, NULL) != 0)
+	{
+		ft_putstr_fd("Error\nInitialisation du mutex display\n", 2);
+		return (0);
+	}
+	return (1);
 }
 
-static void	recover_philo_info(char **av, t_info *philo_info)
+static int	recover_philo_info(char **av, t_info *philo_info)
 {
 	philo_info->nb_philo = ft_atoi(av[1]);
 	philo_info->time_to_die = ft_atoi(av[2]);
@@ -62,7 +74,9 @@ static void	recover_philo_info(char **av, t_info *philo_info)
 		philo_info->b_number_of_eat = 0;
 		philo_info->number_of_eat = 0;
 	}
-	ft_init_philo(philo_info);
+	if (!ft_init_philo(philo_info))
+		return (0);
+	return (1);
 }
 
 static int	parse_arg(char **av, t_info *philo_info)
