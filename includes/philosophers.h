@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:48:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/15 19:00:38 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/15 22:38:13 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+# define RED "\033[0;31m"
+# define CYAN "\033[0;36m"
+# define GREEN "\033[0;32m"
+# define NC "\033[0m"
 
 typedef struct	s_philo
 {
