@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/14 18:38:38 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/15 14:15:55 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,20 @@ double	get_time_miliseconds(void)
 	return (ret);
 }
 
+static	void	ft_init_philo(t_info *philo_info)
+{
+	int	i;
+
+	i = philo_info->nb_philo - 1;
+	while (i >= 0)
+	{
+		philo_info->philo[i].id = i;
+		philo_info->philo[i].fork_r = 0;
+		philo_info->philo[i].fork_l = 0;
+		philo_info->philo[i--].info = philo_info;
+	}
+}
+
 static void	recover_philo_info(char **av, t_info *philo_info)
 {
 	philo_info->nb_philo = ft_atoi(av[1]);
@@ -48,6 +62,7 @@ static void	recover_philo_info(char **av, t_info *philo_info)
 		philo_info->b_number_of_eat = 0;
 		philo_info->number_of_eat = 0;
 	}
+	ft_init_philo(philo_info);
 }
 
 static int	parse_arg(char **av, t_info *philo_info)
@@ -71,6 +86,7 @@ int	main(int ac, char **av)
 {
 	t_info	philo_info;
 
+	philo_info.is_dead = 0;
 	if (ac != 5 && ac != 6)
 	{
 		ft_putendl_fd("Error", 2);

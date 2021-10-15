@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 20:35:31 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/14 18:42:50 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/15 14:17:04 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ void	*routine(void *philo_s)
 	/* pthread_mutex_lock(&lock); */
 	philo = (t_philo *)philo_s;
 	info = philo->info;
+	//printf("Valeur de number_of_eat : %d\n", info->number_of_eat);
 	ft_putstr_fd("Je suis un philosophe\n", 1);
 	printf("Id du philo sur lequel on est : %d\n", philo->id);
-	print_struct_info(philo->info);
+	print_struct_info(info);
+	
 	//printf("Valeur de nb_philo : %d\n", info->nb_philo);
 	//printf("Valeur de time_to_eat : %d\n", info->time_to_eat);
 	/* pthread_mutex_unlock(&lock); */
-	return (philo);
+	return (0);
 }
 
 int	start_philo(t_info *info)
@@ -48,7 +50,6 @@ int	start_philo(t_info *info)
 	} */
 	while (++i < info->nb_philo)
 	{
-		philo[i].id = i; //Ligne qui permet de numeroter les philos
 		ret = pthread_create(&(philo[i].thread_philo), NULL, routine, &(philo[i]));
 		if (ret != 0)
 		{
