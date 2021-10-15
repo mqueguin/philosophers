@@ -6,7 +6,7 @@
 #    By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/12 15:35:01 by mqueguin          #+#    #+#              #
-#    Updated: 2021/10/14 16:00:51 by mqueguin         ###   ########.fr        #
+#    Updated: 2021/10/15 18:44:30 by mqueguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ OBJS_B          =       ${SRCS_B:.c=.o}
 
 RM          =       rm -rf
 
-FLAGS       =       -Wall -Wextra -Werror -g
+FLAGS       =       #-Wall -Wextra -Werror -g
 
 .c.o:
 					@${CC} ${FLAGS} -I${INCLUDES_DIR} -c $< -o ${<:.c=.o}

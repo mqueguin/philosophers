@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/15 18:22:16 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/15 19:04:53 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,11 @@ static int	recover_philo_info(char **av, t_info *philo_info)
 	else
 	{
 		philo_info->b_number_of_eat = 0;
-		philo_info->number_of_eat = 0;
+		philo_info->number_of_eat = -1;
 	}
 	if (!ft_init_philo(philo_info))
 		return (0);
+	philo_info->meal_ok = 0;
 	return (1);
 }
 
