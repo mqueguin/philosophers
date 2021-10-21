@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:48:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/17 18:45:46 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/21 16:56:38 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ typedef struct s_info
 	t_philo			philo[200];
 	long long		timestamp;
 	int				is_dead;
+	pthread_mutex_t	last_meal_mutex;
 	pthread_mutex_t	display;
+	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	meal_mutex;
 	pthread_mutex_t	forks[200];
 }				t_info;
 

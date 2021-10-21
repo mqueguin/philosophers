@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/17 18:32:41 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/21 16:57:14 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,26 @@ static	int	ft_init_philo(t_info *info)
 	return (1);
 }
 
+static int	ft_init_mutex_dead_or_nb_meal(t_info *info)
+{
+	if (pthread_mutex_init(&info->dead_mutex, NULL) != 0)
+	{
+		ft_putstr_fd("Error\nInitilisation mutex error\n", 2);
+		return (0);
+	}
+	if (pthread_mutex_init(&info->meal_mutex, NULL) != 0)
+	{
+		ft_putstr_fd("Error\nInitialisation des mutex error\n", 2);
+		return (0);
+	}
+	if (pthread_mutex_init(&info->last_meal_mutex, NULL) != 0)
+	{
+		ft_putstr_fd("Error\nInitialisation des mutex error\n", 2);
+		return (0);
+	}
+	return (1);
+}
+
 static int	recover_info(char **av, t_info *info)
 {
 	info->nb_philo = ft_atoi(av[1]);
@@ -65,6 +85,8 @@ static int	recover_info(char **av, t_info *info)
 		info->number_of_eat = -1;
 	}
 	if (!ft_init_philo(info))
+		return (0);
+	if (!ft_init_mutex_dead_or_nb_meal(info))
 		return (0);
 	info->meal_ok = 0;
 	return (1);
@@ -97,7 +119,7 @@ int	main(int ac, char **av)
 		ft_putendl_fd("Error", 2);
 		return (-1);
 	}
-	if (!parse_arg(av, &info))
+	if (!parse_arg(av, &info) )
 		return (-1);
 	if (!start_philo(&info))
 		return (-1);
