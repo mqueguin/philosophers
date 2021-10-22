@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:48:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/21 16:56:38 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/22 14:46:22 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_philo
 	pthread_t		thread_philo;
 	int				meal;
 	long long		last_meal;
+	long long		first_meal;
 }				t_philo;
 
 typedef struct s_info

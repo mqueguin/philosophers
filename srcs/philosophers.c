@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/21 16:57:14 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/22 14:35:37 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static	int	ft_init_philo(t_info *info)
 		info->philo[i].info = info;
 		info->philo[i].last_meal = 0;
 		info->philo[i].meal = 0;
+		info->philo[i].first_meal = 0;
 		i--;
 	}
 	if (pthread_mutex_init(&info->display, NULL) != 0)
