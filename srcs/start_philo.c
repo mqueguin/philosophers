@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 20:35:31 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/22 16:53:10 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/22 21:29:05 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,17 @@ static	void	alive_or_dead(t_info *info, int i, int j)
 		j = 0;
 		while (++i < info->nb_philo)
 		{
+			//usleep(4500);
 			pthread_mutex_lock(&info->last_meal_mutex);
 			if (info->philo[i].last_meal == 0)
+			{
 				last_meal_v = info->philo[i].first_meal;
+				pthread_mutex_unlock(&info->last_meal_mutex);
+			}
 			else
+			{
 				last_meal_v = info->philo[i].last_meal;
+			}
 			pthread_mutex_unlock(&info->last_meal_mutex);
 			if ((get_time_miliseconds() - last_meal_v)
 				>= info->time_to_die)
