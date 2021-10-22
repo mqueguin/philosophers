@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 20:35:31 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/22 15:20:50 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/10/22 16:53:10 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,11 @@ static	void	alive_or_dead(t_info *info, int i, int j)
 {
 	int ok;
 	int	meal_ok_v;
+	long long	last_meal_v;
+	int	meal_v;
 
 	ok = info->is_dead;
 	meal_ok_v = info->meal_ok;
-	long long	last_meal_v;
-	int	meal_v;
-	int		k = 0;
 	while (ok == 0 || meal_ok_v == 0)
 	{
 		i = -1;
@@ -84,14 +83,6 @@ static	void	alive_or_dead(t_info *info, int i, int j)
 			else
 				last_meal_v = info->philo[i].last_meal;
 			pthread_mutex_unlock(&info->last_meal_mutex);
-			//meal_v = info->philo[i].meal;
-			//if (k == 0)
-			//{
-				//last_meal_v = info->philo[i].first_meal;
-				//printf("Valeur de first_meal dans alive_or_dead : %lld\n", info->philo[i].first_meal);
-			//}
-			//else
-			//	last_meal_v = info->philo[i].last_meal;
 			if ((get_time_miliseconds() - last_meal_v)
 				>= info->time_to_die)
 			{
@@ -113,7 +104,6 @@ static	void	alive_or_dead(t_info *info, int i, int j)
 				}
 			}
 		}
-		k++;
 	}
 }
 
@@ -133,7 +123,6 @@ int	start_philo(t_info *info)
 			ft_putstr_fd("Error\nImpossible de creer les threads\n", 2);
 			return (0);
 		}
-			//philo[i].last_meal = get_time_miliseconds();
 			philo[i].first_meal = get_time_miliseconds();
 	}
 	alive_or_dead(info, -1, 0);
