@@ -16,17 +16,11 @@ NAME_B          =       philo_bonus
 
 SRCS            =       $(wildcard srcs/*.c)
 
-SRCS_B      =       $(wildcard Bonus/srcs_bonus/*.c)
-
 INCLUDES_DIR     =       includes/
-
-INCLUDES_DIR_B  =       Bonus/includes_bonus/
 
 CC              =       gcc
 
 OBJS            =       ${SRCS:.c=.o}
-
-OBJS_B          =       ${SRCS_B:.c=.o}
 
 RM          =       rm -rf
 
@@ -42,11 +36,6 @@ ${NAME}:		${OBJS}
 						@${CC} ${FLAGS} -I${INCLUDES_DIR} -o ${NAME} ${OBJS}
 						@echo "\nlibft.a has been created"
 						@echo "philo has been created"
-
-bonus:		${OBJS_B}
-						@${CC} ${FLAGS} -I ${INCLUDES_DIR_B} -o ${NAME_B} ${OBJS_B}
-						@echo "\nlibft.a has been created"
-						@echo "philo_bonus has been created"
 
 clean:
 						@${RM} ${OBJS} ${OBJS_B}

@@ -59,10 +59,11 @@ typedef struct s_info
 int			ft_isdigit_str(char *str);
 int			start_philo(t_info *philo_info);
 void		ft_skip_time(int time);
-void		print_state(int id, char *state, t_info *info, int dead, int len);
+void		print_state(int id, char *state, t_info *info, int len);
 long long	get_time_miliseconds(void);
 int			ft_putendl_fd(char *s, int fd);
 void		ft_putstr_fd(char *s, int fd);
-long		ft_atoi(const char *str);
+long		ft_atoi(char *str);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

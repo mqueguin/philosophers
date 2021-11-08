@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/22 14:35:37 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/08 20:09:27 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ static int	ft_init_mutex_dead_or_nb_meal(t_info *info)
 
 static int	recover_info(char **av, t_info *info)
 {
-	info->nb_philo = ft_atoi(av[1]);
-	info->time_to_die = ft_atoi(av[2]);
-	info->time_to_eat = ft_atoi(av[3]);
-	info->time_to_sleep = ft_atoi(av[4]);
+	if ((info->nb_philo = ft_atoi(av[1])) == -1 || (info->time_to_die = ft_atoi(av[2]) == -1)
+		|| (info->time_to_eat = ft_atoi(av[3]) == -1) || (info->time_to_sleep = ft_atoi(av[4]) == -1))
+	{
+		ft_putstr_fd("Error\nInvalid number", 2);
+		return (0);
+	}
 	if (av[5])
 	{
 		info->b_number_of_eat = 1;
@@ -105,11 +107,12 @@ static int	parse_arg(char **av, t_info *info)
 	i = 0;
 	while (av[++i])
 	{
-		if (!ft_isdigit_str(av[i]) || ft_atoi(av[i]) < 1)
+		if (!ft_isdigit_str(av[i]))
 		{
 			ft_putstr_fd("Error\n", 2);
 			return (0);
 		}
+		printf("boucle infini\n");
 	}
 	recover_info(av, info);
 	return (1);
@@ -122,10 +125,10 @@ int	main(int ac, char **av)
 	info.is_dead = 0;
 	if (ac != 5 && ac != 6)
 	{
-		ft_putendl_fd("Error", 2);
+		ft_putendl_fd("Error\nThere must be at least 5 or 6 arguments", 2);
 		return (-1);
 	}
-	if (!parse_arg(av, &info) )
+	if (!parse_arg(av, &info))
 		return (-1);
 	if (!start_philo(&info))
 		return (-1);

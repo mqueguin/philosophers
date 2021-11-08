@@ -25,13 +25,13 @@ static	void	eating(t_philo *philo)
 
 	info = philo->info;
 	pthread_mutex_lock(&info->forks[philo->fork_l]);
-	print_state(philo->id, "has taken a fork", info, 0, 16);
+	print_state(philo->id, "has taken a fork", info, 16);
 	pthread_mutex_lock(&info->forks[philo->fork_r]);
-	print_state(philo->id, "has taken a fork", info, 0, 16);
+	print_state(philo->id, "has taken a fork", info, 16);
 	pthread_mutex_lock(&info->last_meal_mutex);
 	philo->last_meal = get_time_miliseconds(); //creer 200 variables last meal via le numero des philos / creer 200 mutex pour last_meal
 	pthread_mutex_unlock(&info->last_meal_mutex);
-	print_state(philo->id, "is eating", info, 0, 9);
+	print_state(philo->id, "is eating", info, 9);
 	ft_skip_time(info->time_to_eat);
 	pthread_mutex_lock(&info->meal_mutex);
 	philo->meal++;
@@ -63,9 +63,9 @@ static	void	*routine(void *philo_s)
 		}
 		pthread_mutex_unlock(&info->full_meal);
 		eating(philo);
-		print_state(philo->id, "is sleeping", info, 0, 11);
+		print_state(philo->id, "is sleeping", info, 11);
 		ft_skip_time(info->time_to_sleep);
-		print_state(philo->id, "is thinking", info, 0, 11);
+		print_state(philo->id, "is thinking", info, 11);
 	}
 	return (0);
 }
@@ -93,7 +93,7 @@ static	void	alive_or_dead(t_info *info, int i, int j)
 			if ((get_time_miliseconds() - last_meal_v)
 				>= info->time_to_die)
 			{
-				print_state(info->philo[i].id, "died", info, 1, 4);
+				print_state(info->philo[i].id, "died", info, 4);
 				ok = 1;
 				return ;
 			}

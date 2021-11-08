@@ -36,17 +36,32 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putchar_fd(nb + 48, fd);
 }
 
-int	ft_strlen(char *str)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i])
+	if (n == 0)
+		return (0);
+	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n - 1)
 		i++;
-	return (i);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	print_state(int id, char *state, t_info *info, int dead, int len)
+void	ft_skip_time(int time)
+{
+	long long	i;
+
+	i = get_time_miliseconds();
+	while (1)
+	{
+		if (get_time_miliseconds() - i >= time)
+			break ;
+		usleep(200);
+	}
+}
+
+void	print_state(int id, char *state, t_info *info, int len)
 {
 	pthread_mutex_lock(&info->display);
 	write(2, "[ ", 2);
@@ -57,6 +72,6 @@ void	print_state(int id, char *state, t_info *info, int dead, int len)
 	write(1, " ", 1);
 	write(1, state, len);
 	ft_putchar_fd('\n', 1);
-	if (dead == 0)
+	if (ft_strncmp("died", state, 4) != 0)
 		pthread_mutex_unlock(&info->display);
 }
