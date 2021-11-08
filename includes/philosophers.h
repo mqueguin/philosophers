@@ -48,6 +48,7 @@ typedef struct s_info
 	t_philo			philo[200];
 	long long		timestamp;
 	int				is_dead;
+	pthread_mutex_t	full_meal;
 	pthread_mutex_t	last_meal_mutex;
 	pthread_mutex_t	display;
 	pthread_mutex_t	dead_mutex;
@@ -58,7 +59,7 @@ typedef struct s_info
 int			ft_isdigit_str(char *str);
 int			start_philo(t_info *philo_info);
 void		ft_skip_time(int time);
-void		print_state(int id, char *state, t_info *info, int dead);
+void		print_state(int id, char *state, t_info *info, int dead, int len);
 long long	get_time_miliseconds(void);
 int			ft_putendl_fd(char *s, int fd);
 void		ft_putstr_fd(char *s, int fd);

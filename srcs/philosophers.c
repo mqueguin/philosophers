@@ -66,6 +66,11 @@ static int	ft_init_mutex_dead_or_nb_meal(t_info *info)
 		ft_putstr_fd("Error\nInitialisation des mutex error\n", 2);
 		return (0);
 	}
+	if (pthread_mutex_init(&info->full_meal, NULL) != 0)
+	{
+		ft_putstr_fd("Error\nInitialisation des mutex error\n", 2);
+		return (0);
+	}
 	return (1);
 }
 

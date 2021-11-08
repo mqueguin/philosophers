@@ -25,14 +25,14 @@ static	void	eating(t_philo *philo)
 
 	info = philo->info;
 	pthread_mutex_lock(&info->forks[philo->fork_l]);
-	print_state(philo->id, "has taken a fork", info, 0);
+	print_state(philo->id, "has taken a fork", info, 0, 16);
 	pthread_mutex_lock(&info->forks[philo->fork_r]);
-	print_state(philo->id, "has taken a fork", info, 0);
+	print_state(philo->id, "has taken a fork", info, 0, 16);
 	pthread_mutex_lock(&info->last_meal_mutex);
 	philo->last_meal = get_time_miliseconds(); //creer 200 variables last meal via le numero des philos / creer 200 mutex pour last_meal
 	pthread_mutex_unlock(&info->last_meal_mutex);
-	print_state(philo->id, "is eating", info, 0);
-	usleep(info->time_to_eat * 1000);
+	print_state(philo->id, "is eating", info, 0, 9);
+	ft_skip_time(info->time_to_eat);
 	pthread_mutex_lock(&info->meal_mutex);
 	philo->meal++;
 	pthread_mutex_unlock(&info->meal_mutex);
@@ -49,15 +49,23 @@ static	void	*routine(void *philo_s)
 	info = philo->info;
 	if (philo->id % 2)
 		usleep(15000);
-	int	dead;
-
-	dead = info->is_dead;
-	while (dead == 0 || philo->meal <= info->number_of_eat)
+	while (1)
 	{
+		pthread_mutex_lock(&info->dead_mutex);
+		if (info->is_dead == 1)
+			break ;
+		pthread_mutex_unlock(&info->dead_mutex);
+		pthread_mutex_lock(&info->full_meal);
+		if (info->meal_ok == 1)
+		{
+			pthread_mutex_unlock(&info->full_meal);
+			break ;
+		}
+		pthread_mutex_unlock(&info->full_meal);
 		eating(philo);
-		print_state(philo->id, "is sleeping", info, 0);
-		usleep(info->time_to_sleep * 1000);
-		print_state(philo->id, "is thinking", info, 0);
+		print_state(philo->id, "is sleeping", info, 0, 11);
+		ft_skip_time(info->time_to_sleep);
+		print_state(philo->id, "is thinking", info, 0, 11);
 	}
 	return (0);
 }
@@ -67,7 +75,6 @@ static	void	alive_or_dead(t_info *info, int i, int j)
 	int ok;
 	int	meal_ok_v;
 	long long	last_meal_v;
-	int	meal_v;
 
 	ok = info->is_dead;
 	meal_ok_v = info->meal_ok;
@@ -77,31 +84,24 @@ static	void	alive_or_dead(t_info *info, int i, int j)
 		j = 0;
 		while (++i < info->nb_philo)
 		{
-			//usleep(4500);
 			pthread_mutex_lock(&info->last_meal_mutex);
 			if (info->philo[i].last_meal == 0)
-			{
 				last_meal_v = info->philo[i].first_meal;
-				//pthread_mutex_unlock(&info->last_meal_mutex);
-			}
 			else
-			{
 				last_meal_v = info->philo[i].last_meal;
-			}
 			pthread_mutex_unlock(&info->last_meal_mutex);
 			if ((get_time_miliseconds() - last_meal_v)
 				>= info->time_to_die)
 			{
-				print_state(info->philo[i].id, "died", info, 1);
+				print_state(info->philo[i].id, "died", info, 1, 4);
 				ok = 1;
 				return ;
 			}
 			pthread_mutex_lock(&info->meal_mutex);
-			meal_v = info->philo[i].meal;
-			pthread_mutex_unlock(&info->meal_mutex);
-			if (meal_v >= info->number_of_eat
+			if (info->philo[i].meal >= info->number_of_eat
 				&& info->number_of_eat != -1)
 			{
+				pthread_mutex_unlock(&info->meal_mutex);
 				j++;
 				if (j == info->nb_philo - 1)
 				{
@@ -109,6 +109,7 @@ static	void	alive_or_dead(t_info *info, int i, int j)
 					return ;
 				}
 			}
+			pthread_mutex_unlock(&info->meal_mutex);
 		}
 	}
 }
@@ -132,7 +133,7 @@ int	start_philo(t_info *info)
 			philo[i].first_meal = get_time_miliseconds();
 	}
 	alive_or_dead(info, -1, 0);
-	usleep(1500);
+	usleep(1500000);
 	i = -1;
 	while (++i < info->nb_philo)
 		pthread_detach(info->philo[i].thread_philo);

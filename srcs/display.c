@@ -46,16 +46,16 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void	print_state(int id, char *state, t_info *info, int dead)
+void	print_state(int id, char *state, t_info *info, int dead, int len)
 {
 	pthread_mutex_lock(&info->display);
-	ft_putstr_fd("[ ", 2);
+	write(2, "[ ", 2);
 	ft_putnbr_fd((long long)(get_time_miliseconds() - info->timestamp), 1);
-	ft_putstr_fd(" ]", 2);
+	write(2, " ]", 2);
 	write(1, " Philo ", 7);
 	ft_putnbr_fd(id + 1, 1);
-	ft_putchar_fd(' ', 1);
-	write(1, state, ft_strlen(state));
+	write(1, " ", 1);
+	write(1, state, len);
 	ft_putchar_fd('\n', 1);
 	if (dead == 0)
 		pthread_mutex_unlock(&info->display);
