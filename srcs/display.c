@@ -12,11 +12,51 @@
 
 #include "../includes/philosophers.h"
 
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	long int	nb;
+
+	nb = n;
+	if (nb < 0)
+	{
+		ft_putchar_fd('-', fd);
+		nb = nb * -1;
+	}
+	if (nb >= 10)
+	{
+		ft_putnbr_fd(nb / 10, fd);
+		ft_putchar_fd(nb % 10 + 48, fd);
+	}
+	if (nb < 10)
+		ft_putchar_fd(nb + 48, fd);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
 void	print_state(int id, char *state, t_info *info, int dead)
 {
 	pthread_mutex_lock(&info->display);
-	printf("[ %s%lld%s ] philo: %s%d%s %s\n", GREEN,
-		(get_time_miliseconds() - info->timestamp), NC, CYAN, id, NC, state);
+	ft_putstr_fd("[ ", 2);
+	ft_putnbr_fd((long long)(get_time_miliseconds() - info->timestamp), 1);
+	ft_putstr_fd(" ]", 2);
+	write(1, " Philo ", 7);
+	ft_putnbr_fd(id + 1, 1);
+	ft_putchar_fd(' ', 1);
+	write(1, state, ft_strlen(state));
+	ft_putchar_fd('\n', 1);
 	if (dead == 0)
 		pthread_mutex_unlock(&info->display);
 }

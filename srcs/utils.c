@@ -32,7 +32,7 @@ void	ft_skip_time(int time)
 	{
 		if (get_time_miliseconds() - i >= time)
 			break ;
-		usleep(20);
+		usleep(200);
 	}
 }
 
