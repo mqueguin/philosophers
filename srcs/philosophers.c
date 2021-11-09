@@ -6,19 +6,11 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/08 20:09:27 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/09 17:17:38 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-long long	get_time_miliseconds(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
 
 static	int	ft_init_philo(t_info *info)
 {
@@ -76,12 +68,12 @@ static int	ft_init_mutex_dead_or_nb_meal(t_info *info)
 
 static int	recover_info(char **av, t_info *info)
 {
-	if ((info->nb_philo = ft_atoi(av[1])) == -1 || (info->time_to_die = ft_atoi(av[2]) == -1)
-		|| (info->time_to_eat = ft_atoi(av[3]) == -1) || (info->time_to_sleep = ft_atoi(av[4]) == -1))
-	{
-		ft_putstr_fd("Error\nInvalid number", 2);
+	if (!ft_check_overflow(av))
 		return (0);
-	}
+	info->nb_philo = ft_atoi(av[1]);
+	info->time_to_die = ft_atoi(av[2]);
+	info->time_to_eat = ft_atoi(av[3]);
+	info->time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
 	{
 		info->b_number_of_eat = 1;
@@ -112,9 +104,9 @@ static int	parse_arg(char **av, t_info *info)
 			ft_putstr_fd("Error\n", 2);
 			return (0);
 		}
-		printf("boucle infini\n");
 	}
-	recover_info(av, info);
+	if (!recover_info(av, info))
+		return (0);
 	return (1);
 }
 
@@ -130,6 +122,8 @@ int	main(int ac, char **av)
 	}
 	if (!parse_arg(av, &info))
 		return (-1);
+	printf("J ai passer le parse arg\n");
+	printf("Valeur de time_to_eat: %d / time_to_death: %d / time_to_sleep: %d \n", info.time_to_eat, info.time_to_die, info.time_to_sleep);
 	if (!start_philo(&info))
 		return (-1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:48:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/22 16:48:49 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/09 17:09:13 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ int			ft_putendl_fd(char *s, int fd);
 void		ft_putstr_fd(char *s, int fd);
 long		ft_atoi(char *str);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int 		ft_check_overflow(char **av);
 
 #endif
