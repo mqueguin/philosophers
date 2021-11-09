@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/09 18:02:41 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:57:02 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,21 @@ static	int	ft_init_philo(t_info *info)
 	return (1);
 }
 
-static int	ft_init_mutex_dead_or_nb_meal(t_info *info)
+int	ft_check_nb_philo(int nb_philo)
 {
-	if (pthread_mutex_init(&info->dead_mutex, NULL) != 0)
+	if (nb_philo > 200)
 	{
-		ft_putstr_fd("Error\nInitilisation mutex error\n", 2);
+		ft_putstr_fd("Error\nThe number of philo can't be more than 200\n", 2);
 		return (0);
 	}
-	if (pthread_mutex_init(&info->meal_mutex, NULL) != 0)
+	if (nb_philo == 0)
 	{
-		ft_putstr_fd("Error\nInitialisation des mutex error\n", 2);
-		return (0);
-	}
-	if (pthread_mutex_init(&info->last_meal_mutex, NULL) != 0)
-	{
-		ft_putstr_fd("Error\nInitialisation des mutex error\n", 2);
-		return (0);
-	}
-	if (pthread_mutex_init(&info->full_meal, NULL) != 0)
-	{
-		ft_putstr_fd("Error\nInitialisation des mutex error\n", 2);
+		ft_putstr_fd("Error\nThere must be at least 1 philo\n", 2);
 		return (0);
 	}
 	return (1);
 }
-
+		
 static int	recover_info(char **av, t_info *info)
 {
 	if (!ft_check_overflow(av))
@@ -74,16 +64,8 @@ static int	recover_info(char **av, t_info *info)
 	info->time_to_die = ft_atoi(av[2]);
 	info->time_to_eat = ft_atoi(av[3]);
 	info->time_to_sleep = ft_atoi(av[4]);
-	if (info->nb_philo > 200)
-	{
-		ft_putstr_fd("Error\nThe number of philo can't be more than 200\n", 2);
+	if (!ft_check_nb_philo(info->nb_philo))
 		return (0);
-	}
-	if (info->nb_philo == 0)
-	{
-		ft_putstr_fd("Error\nThere must be at least 1 philo\n", 2);
-		return (0);
-	}
 	if (av[5])
 	{
 		info->b_number_of_eat = 1;
@@ -96,7 +78,7 @@ static int	recover_info(char **av, t_info *info)
 	}
 	if (!ft_init_philo(info))
 		return (0);
-	if (!ft_init_mutex_dead_or_nb_meal(info))
+	if (!ft_init_mutex(info))
 		return (0);
 	info->meal_ok = 0;
 	return (1);

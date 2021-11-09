@@ -6,7 +6,7 @@
 #    By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/12 15:35:01 by mqueguin          #+#    #+#              #
-#    Updated: 2021/11/09 17:20:03 by mqueguin         ###   ########.fr        #
+#    Updated: 2021/11/09 18:18:40 by mqueguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJS            =       ${SRCS:.c=.o}
 
 RM          =       rm -rf
 
-FLAGS       =       -Wall -Wextra -Werror -pthread -g #-fsanitize=thread 
+FLAGS       =       -Wall -Wextra -Werror -pthread -g -fsanitize=address 
 
 .c.o:
 					@${CC} ${FLAGS} -I${INCLUDES_DIR} -c $< -o ${<:.c=.o}
