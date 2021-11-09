@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:05:35 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/09 17:16:11 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:14:06 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,6 @@ int	ft_check_overflow(char **av)
 	}
 	return (1);
 }
-
-/*static int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		;
-	return (i);
-}
-
-static char    *ft_jump_zero(char *s)
-{
-    while (*s++ == '0')
-        ;
-    return (s);
-}*/
 
 long	ft_atoi(char *str)
 {

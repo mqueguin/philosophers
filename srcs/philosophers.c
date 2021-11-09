@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/09 17:17:38 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:02:41 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ static int	recover_info(char **av, t_info *info)
 	info->time_to_die = ft_atoi(av[2]);
 	info->time_to_eat = ft_atoi(av[3]);
 	info->time_to_sleep = ft_atoi(av[4]);
+	if (info->nb_philo > 200)
+	{
+		ft_putstr_fd("Error\nThe number of philo can't be more than 200\n", 2);
+		return (0);
+	}
+	if (info->nb_philo == 0)
+	{
+		ft_putstr_fd("Error\nThere must be at least 1 philo\n", 2);
+		return (0);
+	}
 	if (av[5])
 	{
 		info->b_number_of_eat = 1;
@@ -122,8 +132,6 @@ int	main(int ac, char **av)
 	}
 	if (!parse_arg(av, &info))
 		return (-1);
-	printf("J ai passer le parse arg\n");
-	printf("Valeur de time_to_eat: %d / time_to_death: %d / time_to_sleep: %d \n", info.time_to_eat, info.time_to_die, info.time_to_sleep);
 	if (!start_philo(&info))
 		return (-1);
 	return (0);
