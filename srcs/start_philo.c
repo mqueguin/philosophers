@@ -6,18 +6,11 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 20:35:31 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/09 18:37:02 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/10 18:18:25 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-/*static	void	ft_caca(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->info->last_meal_mutex);
-	philo->last_meal = get_time_miliseconds();
-	pthread_mutex_unlock(&philo->info->last_meal_mutex);
-}*/
 
 static	void	eating(t_philo *philo)
 {
@@ -29,7 +22,7 @@ static	void	eating(t_philo *philo)
 	pthread_mutex_lock(&info->forks[philo->fork_r]);
 	print_state(philo->id, "has taken a fork", info, 16);
 	pthread_mutex_lock(&info->last_meal_mutex);
-	philo->last_meal = get_time_miliseconds(); //creer 200 variables last meal via le numero des philos / creer 200 mutex pour last_meal
+	philo->last_meal = get_time_miliseconds();
 	pthread_mutex_unlock(&info->last_meal_mutex);
 	print_state(philo->id, "is eating", info, 9);
 	ft_skip_time(info->time_to_eat);
@@ -51,17 +44,8 @@ static	void	*routine(void *philo_s)
 		usleep(15000);
 	while (1)
 	{
-		pthread_mutex_lock(&info->dead_mutex);
-		if (info->is_dead == 1)
+		if (!check_dead_full_meal_in_routine(info))
 			break ;
-		pthread_mutex_unlock(&info->dead_mutex);
-		pthread_mutex_lock(&info->full_meal);
-		if (info->meal_ok == 1)
-		{
-			pthread_mutex_unlock(&info->full_meal);
-			break ;
-		}
-		pthread_mutex_unlock(&info->full_meal);
 		eating(philo);
 		print_state(philo->id, "is sleeping", info, 11);
 		ft_skip_time(info->time_to_sleep);
@@ -70,46 +54,52 @@ static	void	*routine(void *philo_s)
 	return (0);
 }
 
-static	void	alive_or_dead(t_info *info, int i, int j)
+static	int	lock_mutex_last_meal_and_meal(t_info *info,
+		int is_dead, int full_meal_v, int i_j[2])
 {
-	int ok;
-	int	meal_ok_v;
 	long long	last_meal_v;
 
-	ok = info->is_dead;
-	meal_ok_v = info->meal_ok;
-	while (ok == 0 || meal_ok_v == 0)
+	pthread_mutex_lock(&info->last_meal_mutex);
+	if (info->philo[i_j[0]].last_meal == 0)
+		last_meal_v = info->philo[i_j[0]].first_meal;
+	else
+		last_meal_v = info->philo[i_j[0]].last_meal;
+	pthread_mutex_unlock(&info->last_meal_mutex);
+	if ((get_time_miliseconds() - last_meal_v) >= info->time_to_die)
 	{
-		i = -1;
-		j = 0;
-		while (++i < info->nb_philo)
+		is_dead = 1;
+		return (print_state(info->philo[i_j[0]].id, "died", info, 4));
+	}
+	pthread_mutex_lock(&info->meal_mutex);
+	if (info->philo[i_j[0]].meal >= info->number_eat && info->number_eat != -1)
+	{
+		pthread_mutex_unlock(&info->meal_mutex);
+		if (++i_j[1] == info->nb_philo - 1)
 		{
-			pthread_mutex_lock(&info->last_meal_mutex);
-			if (info->philo[i].last_meal == 0)
-				last_meal_v = info->philo[i].first_meal;
-			else
-				last_meal_v = info->philo[i].last_meal;
-			pthread_mutex_unlock(&info->last_meal_mutex);
-			if ((get_time_miliseconds() - last_meal_v)
-				>= info->time_to_die)
-			{
-				print_state(info->philo[i].id, "died", info, 4);
-				ok = 1;
+			full_meal_v = 1;
+			return (0);
+		}
+	}
+	pthread_mutex_unlock(&info->meal_mutex);
+	return (1);
+}
+
+static	void	alive_or_dead(t_info *info, int i_j[2])
+{
+	int			is_dead;
+	int			full_meal_v;
+
+	is_dead = info->is_dead;
+	full_meal_v = info->meal_ok;
+	while (is_dead == 0 || full_meal_v == 0)
+	{
+		i_j[0] = -1;
+		i_j[1] = 0;
+		while (++i_j[0] < info->nb_philo)
+		{
+			if (!lock_mutex_last_meal_and_meal(info,
+					is_dead, full_meal_v, i_j))
 				return ;
-			}
-			pthread_mutex_lock(&info->meal_mutex);
-			if (info->philo[i].meal >= info->number_of_eat
-				&& info->number_of_eat != -1)
-			{
-				pthread_mutex_unlock(&info->meal_mutex);
-				j++;
-				if (j == info->nb_philo - 1)
-				{
-					meal_ok_v = 1;
-					return ;
-				}
-			}
-			pthread_mutex_unlock(&info->meal_mutex);
 		}
 	}
 }
@@ -118,7 +108,10 @@ int	start_philo(t_info *info)
 {
 	int		i;
 	t_philo	*philo;
+	int		i_j[2];
 
+	i_j[0] = -1;
+	i_j[1] = 0;
 	philo = info->philo;
 	i = -1;
 	info->timestamp = get_time_miliseconds();
@@ -130,9 +123,9 @@ int	start_philo(t_info *info)
 			ft_putstr_fd("Error\nImpossible de creer les threads\n", 2);
 			return (0);
 		}
-			philo[i].first_meal = get_time_miliseconds();
+		philo[i].first_meal = get_time_miliseconds();
 	}
-	alive_or_dead(info, -1, 0);
+	alive_or_dead(info, i_j);
 	usleep(1500000);
 	i = -1;
 	while (++i < info->nb_philo)

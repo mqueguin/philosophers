@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 17:43:08 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/10/22 15:01:16 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/10 18:17:06 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_skip_time(int time)
 	}
 }
 
-void	print_state(int id, char *state, t_info *info, int len)
+int	print_state(int id, char *state, t_info *info, int len)
 {
 	pthread_mutex_lock(&info->display);
 	write(2, "[ ", 2);
@@ -73,5 +73,9 @@ void	print_state(int id, char *state, t_info *info, int len)
 	write(1, state, len);
 	ft_putchar_fd('\n', 1);
 	if (ft_strncmp("died", state, 4) != 0)
+	{
 		pthread_mutex_unlock(&info->display);
+		return (1);
+	}
+	return (0);
 }

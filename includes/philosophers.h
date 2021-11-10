@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:48:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/09 18:42:12 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/10 18:21:16 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ typedef struct s_info
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				number_of_eat;
+	int				number_eat;
 	int				meal_ok;
-	int				b_number_of_eat;
 	t_philo			philo[200];
 	long long		timestamp;
 	int				is_dead;
@@ -59,13 +58,14 @@ typedef struct s_info
 int			ft_isdigit_str(char *str);
 int			start_philo(t_info *philo_info);
 void		ft_skip_time(int time);
-void		print_state(int id, char *state, t_info *info, int len);
+int			print_state(int id, char *state, t_info *info, int len);
 long long	get_time_miliseconds(void);
 int			ft_putendl_fd(char *s, int fd);
 void		ft_putstr_fd(char *s, int fd);
 long		ft_atoi(char *str);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-int 		ft_check_overflow(char **av);
+int			ft_check_overflow(char **av);
 int			ft_init_mutex(t_info *info);
+int			check_dead_full_meal_in_routine(t_info *info);
 
 #endif

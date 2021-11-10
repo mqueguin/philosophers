@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/09 18:57:02 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/10 18:14:52 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_check_nb_philo(int nb_philo)
 	}
 	return (1);
 }
-		
+
 static int	recover_info(char **av, t_info *info)
 {
 	if (!ft_check_overflow(av))
@@ -67,15 +67,9 @@ static int	recover_info(char **av, t_info *info)
 	if (!ft_check_nb_philo(info->nb_philo))
 		return (0);
 	if (av[5])
-	{
-		info->b_number_of_eat = 1;
-		info->number_of_eat = ft_atoi(av[5]);
-	}
+		info->number_eat = ft_atoi(av[5]);
 	else
-	{
-		info->b_number_of_eat = 0;
-		info->number_of_eat = -1;
-	}
+		info->number_eat = -1;
 	if (!ft_init_philo(info))
 		return (0);
 	if (!ft_init_mutex(info))

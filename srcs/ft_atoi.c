@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:05:35 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/09 18:14:06 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/10 18:20:07 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 int	ft_check_overflow(char **av)
 {
-	int	i;
+	int		i;
 	long	tmp;
 
 	i = 0;
-
 	while (av[++i])
 	{
 		tmp = ft_atoi(av[i]);
