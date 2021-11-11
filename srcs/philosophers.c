@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:33:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/11 14:13:12 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/11 18:31:01 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	parse_arg(char **av, t_info *info)
 	{
 		if (!ft_isdigit_str(av[i]))
 		{
-			ft_putstr_fd("Error\n", 2);
+			ft_putstr_fd("Error\nIs not a valid number\n", 2);
 			return (0);
 		}
 	}

@@ -6,7 +6,7 @@
 #    By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/12 15:35:01 by mqueguin          #+#    #+#              #
-#    Updated: 2021/11/10 18:32:28 by mqueguin         ###   ########.fr        #
+#    Updated: 2021/11/11 14:46:08 by mqueguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,14 @@ NAME	        =		philo
 
 NAME_B          =       philo_bonus
 
-SRCS            =       $(wildcard srcs/*.c)
+SRCS            =       ./srcs/display.c\
+						./srcs/ft_atoi.c\
+						./srcs/get_time.c\
+						./srcs/init_mutex.c\
+						./srcs/philosophers.c\
+						./srcs/routine_utils.c\
+						./srcs/start_philo.c\
+						./srcs/utils.c
 
 INCLUDES_DIR     =       includes/
 
