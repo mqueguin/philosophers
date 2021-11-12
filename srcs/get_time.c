@@ -12,6 +12,19 @@
 
 #include "../includes/philosophers.h"
 
+void	ft_skip_time(int time)
+{
+	long long	i;
+
+	i = get_time_miliseconds();
+	while (1)
+	{
+		if (get_time_miliseconds() - i >= time)
+			break ;
+		usleep(200);
+	}
+}
+
 long long	get_time_miliseconds(void)
 {
 	struct timeval	tv;

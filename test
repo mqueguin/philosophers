@@ -1,0 +1,30 @@
+[ 0 ] Philo 1 has taken a fork
+[ 0 ] Philo 1 has taken a fork
+[ 0 ] Philo 1 is eating
+[ 0 ] Philo 3 has taken a fork
+[ 0 ] Philo 3 has taken a fork
+[ 0 ] Philo 3 is eating
+[ 200 ] Philo 3 is sleeping
+[ 200 ] Philo 1 is sleeping
+[ 200 ] Philo 4 has taken a fork
+[ 200 ] Philo 4 has taken a fork
+[ 200 ] Philo 4 is eating
+[ 200 ] Philo 2 has taken a fork
+[ 200 ] Philo 2 has taken a fork
+[ 200 ] Philo 2 is eating
+[ 400 ] Philo 3 is thinking
+[ 400 ] Philo 3 has taken a fork
+[ 400 ] Philo 2 is sleeping
+[ 400 ] Philo 1 is thinking
+[ 400 ] Philo 4 is sleeping
+[ 400 ] Philo 3 has taken a fork
+[ 400 ] Philo 3 is eating
+[ 400 ] Philo 1 has taken a fork
+[ 400 ] Philo 1 has taken a fork
+[ 400 ] Philo 1 is eating
+[ 600 ] Philo 1 is sleeping
+[ 600 ] Philo 2 is thinking
+[ 600 ] Philo 4 is thinking
+[ 600 ] Philo 3 is sleeping
+[ 800 ] Philo 3 is thinking
+[ 800 ] Philo 1 is thinking

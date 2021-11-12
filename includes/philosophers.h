@@ -67,5 +67,6 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_check_overflow(char **av);
 int			ft_init_mutex(t_info *info);
 int			check_dead_full_meal_in_routine(t_info *info);
+int			print_death(t_info *info, int i);
 
 #endif
