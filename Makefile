@@ -31,7 +31,7 @@ OBJS            =       ${SRCS:.c=.o}
 
 RM          =       rm -rf
 
-FLAGS       =       -Wall -Wextra -Werror -pthread -g #-fsanitize=thread 
+FLAGS       =       -Wall -Wextra -Werror -pthread -g -fsanitize=thread 
 
 .c.o:
 					@${CC} ${FLAGS} -I${INCLUDES_DIR} -c $< -o ${<:.c=.o}

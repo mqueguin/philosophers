@@ -58,12 +58,10 @@ static	long long	set_last_meal(t_info *info, int i)
 {
 	long long	last_meal_v;
 
-	pthread_mutex_lock(&info->last_meal_mutex);
 	if (info->philo[i].last_meal == 0)
 		last_meal_v = info->philo[i].first_meal;
 	else
 		last_meal_v = info->philo[i].last_meal;
-	pthread_mutex_unlock(&info->last_meal_mutex);
 	return (last_meal_v);
 }
 
@@ -75,9 +73,11 @@ static	void	alive_or_dead(t_info *info, int i, int j)
 		j = -1;
 		while (++i < info->nb_philo)
 		{
+			pthread_mutex_lock(&info->last_meal_mutex);
 			info->philo[i].last_meal = set_last_meal(info, i);
 			if (print_death(info, i) == 1)
 				return ;
+			pthread_mutex_unlock(&info->last_meal_mutex);
 			pthread_mutex_lock(&info->meal_mutex);
 			if (info->philo[i].meal >= info->number_eat
 				&& info->number_eat != -1)

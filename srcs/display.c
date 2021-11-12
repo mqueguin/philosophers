@@ -50,9 +50,11 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 int	print_death(t_info *info, int i)
 {
+	//pthread_mutex_lock(&info->last_meal_mutex);
 	if ((get_time_miliseconds() - info->philo[i].last_meal)
 		>= info->time_to_die)
 	{
+		//pthread_mutex_unlock(&info->last_meal_mutex);
 		pthread_mutex_lock(&info->dead_mutex);
 		info->is_dead = 1;
 		pthread_mutex_unlock(&info->dead_mutex);
