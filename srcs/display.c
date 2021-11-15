@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 17:43:08 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/10 18:17:06 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:07:48 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,9 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 int	print_death(t_info *info, int i)
 {
-	//pthread_mutex_lock(&info->last_meal_mutex);
 	if ((get_time_miliseconds() - info->philo[i].last_meal)
 		>= info->time_to_die)
 	{
-		//pthread_mutex_unlock(&info->last_meal_mutex);
 		pthread_mutex_lock(&info->dead_mutex);
 		info->is_dead = 1;
 		pthread_mutex_unlock(&info->dead_mutex);
@@ -64,7 +62,7 @@ int	print_death(t_info *info, int i)
 	return (0);
 }
 
-int	print_state(int id, char *state, t_info *info, int len)
+void	print_state(int id, char *state, t_info *info, int len)
 {
 	pthread_mutex_lock(&info->display);
 	write(1, "[ ", 2);
@@ -75,10 +73,11 @@ int	print_state(int id, char *state, t_info *info, int len)
 	write(1, " ", 1);
 	write(1, state, len);
 	ft_putchar_fd('\n', 1);
-	if (ft_strncmp("died", state, 4) != 0)
+	/*if (ft_strncmp("died", state, 4) != 0)
 	{
 		pthread_mutex_unlock(&info->display);
 		return (1);
-	}
-	return (0);
+	}*/
+	//return (0);
+	pthread_mutex_unlock(&info->display);
 }

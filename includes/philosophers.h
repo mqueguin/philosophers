@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:48:54 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/10 18:21:16 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:02:29 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_info
 int			ft_isdigit_str(char *str);
 int			start_philo(t_info *philo_info);
 void		ft_skip_time(int time);
-int			print_state(int id, char *state, t_info *info, int len);
+void		print_state(int id, char *state, t_info *info, int len);
 long long	get_time_miliseconds(void);
 int			ft_putendl_fd(char *s, int fd);
 void		ft_putstr_fd(char *s, int fd);
