@@ -6,7 +6,7 @@
 /*   By: mqueguin <mqueguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 17:43:08 by mqueguin          #+#    #+#             */
-/*   Updated: 2021/11/15 16:07:48 by mqueguin         ###   ########.fr       */
+/*   Updated: 2021/11/16 16:58:51 by mqueguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	print_death(t_info *info, int i)
 		info->is_dead = 1;
 		pthread_mutex_unlock(&info->dead_mutex);
 		print_state(info->philo[i].id, "died", info, 4);
-		pthread_mutex_lock(&info->print_death_mutex);
-		info->print = 1;
-		pthread_mutex_unlock(&info->print_death_mutex);
+		//pthread_mutex_lock(&info->print_death_mutex);
+		//info->print = 1;
+		//pthread_mutex_unlock(&info->print_death_mutex);
 		return (1);
 	}
 	return (0);
@@ -73,8 +73,8 @@ void	print_state(int id, char *state, t_info *info, int len)
 		pthread_mutex_unlock(&info->print_death_mutex);
 		return ;
 	}
-	pthread_mutex_unlock(&info->print_death_mutex);
 	pthread_mutex_lock(&info->display);
+	pthread_mutex_unlock(&info->print_death_mutex);
 	write(1, "[ ", 2);
 	ft_putnbr_fd((long long)(get_time_miliseconds() - info->timestamp), 1);
 	write(1, " ]", 2);
