@@ -75,6 +75,7 @@ static int	recover_info(char **av, t_info *info)
 	if (!ft_init_mutex(info))
 		return (0);
 	info->meal_ok = 0;
+	info->print = 0;
 	return (1);
 }
 

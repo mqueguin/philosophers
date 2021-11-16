@@ -57,6 +57,9 @@ int	print_death(t_info *info, int i)
 		info->is_dead = 1;
 		pthread_mutex_unlock(&info->dead_mutex);
 		print_state(info->philo[i].id, "died", info, 4);
+		pthread_mutex_lock(&info->print_death_mutex);
+		info->print = 1;
+		pthread_mutex_unlock(&info->print_death_mutex);
 		return (1);
 	}
 	return (0);
@@ -64,6 +67,13 @@ int	print_death(t_info *info, int i)
 
 void	print_state(int id, char *state, t_info *info, int len)
 {
+	pthread_mutex_lock(&info->print_death_mutex);
+	if (info->print == 1)
+	{
+		pthread_mutex_unlock(&info->print_death_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&info->print_death_mutex);
 	pthread_mutex_lock(&info->display);
 	write(1, "[ ", 2);
 	ft_putnbr_fd((long long)(get_time_miliseconds() - info->timestamp), 1);
@@ -73,11 +83,10 @@ void	print_state(int id, char *state, t_info *info, int len)
 	write(1, " ", 1);
 	write(1, state, len);
 	ft_putchar_fd('\n', 1);
-	/*if (ft_strncmp("died", state, 4) != 0)
+	/* if (ft_strncmp("died", state, 4) != 0)
 	{
 		pthread_mutex_unlock(&info->display);
-		return (1);
-	}*/
-	//return (0);
+		return ;
+	} */
 	pthread_mutex_unlock(&info->display);
 }

@@ -47,11 +47,13 @@ typedef struct s_info
 	t_philo			philo[200];
 	long long		timestamp;
 	int				is_dead;
+	int				print;
 	pthread_mutex_t	full_meal;
 	pthread_mutex_t	last_meal_mutex;
 	pthread_mutex_t	display;
 	pthread_mutex_t	dead_mutex;
 	pthread_mutex_t	meal_mutex;
+	pthread_mutex_t	print_death_mutex;
 	pthread_mutex_t	forks[200];
 }				t_info;
 
